@@ -1,4 +1,4 @@
-import React, {useState,useCallback} from 'react'
+import React, {useState,useCallback, useEffect} from 'react'
 import useKeyListener from './hooks/useKeyListener'
 
 import './App.css';
@@ -12,17 +12,21 @@ function App() {
   const [angle, setAngle]=useState(0)
   const [lastKey, setLastKey]=useState('')
 
-  console.log(angle);
+  useEffect(() => {
+
+    angle > 360 && setAngle(angle-360)
+    angle < -360 && setAngle(angle+360)
+  }, [angle])
   
   const onKeyDown = useCallback(
     (e:React.KeyboardEvent)=>{
 
       if(e.code === LEFT_ARROW) {
-        setAngle(prev => Math.max(-360, prev-10))
+        setAngle(prev => prev-10)
         setLastKey(LEFT_ARROW)
       
       } else if(e.code===RIGHT_ARROW) {
-        setAngle(prev => Math.min(360, prev+10))
+        setAngle(prev => prev+10)
         setLastKey(RIGHT_ARROW)
 
       } else if(e.code===ESCAPE) {
@@ -36,23 +40,23 @@ function App() {
 
   return (
     <div className="App">
-       <p>Angle: {angle}</p>
+      <div>
+      <p>Angle: {angle}</p>
       <p>Last Key: {lastKey}</p>
-      <header className="App-header">
-      <svg
-        width="400px"
-        height="400px"
-        fill="none"
-        strokeWidth="10"
-        stroke="black"
-        style={{
-          transform: `rotate(${angle}deg)`,
-        }}
-      >
-        <polyline points="100,200 200,0 300,200" />
-        <polyline points="200,0 200,400" />
-      </svg>
-      </header>
+        <svg
+          width="400px"
+          height="400px"
+          fill="none"
+          strokeWidth="10"
+          stroke="black"
+          style={{
+            transform: `rotate(${angle}deg)`,
+          }}
+        >
+          <polyline points="100,200 200,0 300,200" />
+          <polyline points="200,0 200,400" />
+        </svg>
+      </div>
      
     </div>
   );
