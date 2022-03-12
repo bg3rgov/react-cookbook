@@ -1,4 +1,4 @@
-import React, {useState,useCallback, useEffect} from 'react'
+import {useState,useCallback, useEffect, KeyboardEvent} from 'react'
 import useKeyListener from './hooks/useKeyListener'
 
 import './App.css';
@@ -19,7 +19,7 @@ function App() {
   }, [angle])
   
   const onKeyDown = useCallback(
-    (e:React.KeyboardEvent)=>{
+    (e:KeyboardEvent ) =>{
 
       if(e.code === LEFT_ARROW) {
         setAngle(prev => prev-10)

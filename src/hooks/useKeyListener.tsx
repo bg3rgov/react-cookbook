@@ -1,22 +1,24 @@
-import {KeyboardEvent,useEffect} from 'react'
+import {useEffect, KeyboardEvent} from 'react'
 
 
 const useKeyListener = (callback:(e:KeyboardEvent)=>void) => {
 
     useEffect(() =>{
 
-        const listener = (e:any) => {
+        const listener = (e:KeyboardEvent) => {
 
-            const tagName = e.target.tagName
+            const target = e.target as HTMLElement
+            const tagName = target.tagName
             if(tagName==='BODY'){
 
                 callback(e)
             }
-        } 
-        document.addEventListener('keydown', listener)
+        }
+        
+        document.addEventListener('keydown', (e:Event)=>listener)
         return () => {
 
-            document.removeEventListener('keydown', listener)
+            document.removeEventListener('keydown', (e:Event)=>listener)
         }
     }, [callback])
 }
