@@ -1,5 +1,4 @@
-import {useEffect, KeyboardEvent} from 'react'
-
+import {useEffect} from 'react'
 
 const useKeyListener = (callback:(e:KeyboardEvent)=>void) => {
 
@@ -15,10 +14,10 @@ const useKeyListener = (callback:(e:KeyboardEvent)=>void) => {
             }
         }
         
-        document.addEventListener('keydown', (e:Event)=>listener)
+        document.addEventListener('keydown', listener)
         return () => {
 
-            document.removeEventListener('keydown', (e:Event)=>listener)
+            document.removeEventListener('keydown', listener)
         }
     }, [callback])
 }
